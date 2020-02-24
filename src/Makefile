@@ -1,11 +1,15 @@
-# ============================================================================#
+# -*-   mode: makefile ; coding: koi8   -*- ------------------------------------
 
-CYGWIN_CYGWIN  = 1 
-#UNIX_LINUX  = 1 
+# =============================================================================#
+
+#CYGWIN_CYGWIN  = 1 
+UNIX_LINUX  = 1 
 #CYGWIN_WINDOWS = 1 
 
-# ============================================================================#
+# =============================================================================#
+
 ifdef UNIX_LINUX
+
   #OPTIM = -O2 -w -Wunused -fno-exceptions # -Wall 
   #OPTIM = -fno-exceptions -Wreturn-type -Wimplicit -Wuninitialized
   OPTIM = -fno-exceptions -Wall
@@ -25,7 +29,8 @@ ifdef UNIX_LINUX
   TT = T/
 
 endif
-# ============================================================================#
+
+# =============================================================================#
 ifdef CYGWIN_CYGWIN
   OPTIM = -O2 -fno-exceptions -Wall 
   APP = -mwindows 
@@ -84,6 +89,7 @@ GSL_LIB = -L$(GSL_DIR)/.libs -lgsl -L$(GSL_DIR)/cblas/.libs -lgslcblas
 
 S_INCS = $(XINC) $(GINC) $(GNUPLOTI_INC) $(GSL_INC) 
 S_LIBS = $(XLIB) $(GLIB) $(GNUPLOTI_LIB) $(GSL_LIB) 
+
 # ============================================================================#
 
 WINDRES = windres
@@ -94,6 +100,7 @@ WINDRES = windres
 LIBS = $(FLTK_LIBS) $(LDLIBS) $(UNIX_LIBS) 
 #PROGS = tester  dialog boxnot editor boxdlg #help$(EXE)
 PROGS = tester dialog search # mmm ttt ccc 
+
 # grafin konkurs gsl-rand 
 # help$(EXE) ago mmm-g 
 
@@ -141,16 +148,16 @@ $(TT)gowork.o : gowork.c common.h aboard.h gowork.h
 	$(CC) $(FLAGS) -o $@ -c gowork.c 
 $(TT)evalut.o : evalut.c common.h  aboard.h gowork.h evalut.h
 	$(CC) $(FLAGS) -o $@ -c evalut.c 
-# ============================================================================#
+# =============================================================================#
 $(TT)myfltk.o : myfltk.c myfltk.h
 	$(CPP) $(FLAGS) $(FLTK_INCS) -o $@ -c myfltk.c 
 #	$(CPP) $(FLAGS) $(FLTK_INCS) -c $<
-# ============================================================================#
+# =============================================================================#
 $(DIAL_ICONS): S\dialog.rc S\dialog.ico
 #	(cd T; $(WINDRES) $< $@)
 #	(cd S; $(WINDRES) dialog.rc ..\T\dialog.o)
 	(cd S; $(WINDRES) dialog.rc ../T/dialog.o)
-# ============================================================================#
+# =============================================================================#
 clean : 
 	rm -f *.exe *.obj *.lib *.o T\*.o *.so $(PROGS)  # *.dll *.exp 
 	(cd T ; rm -f *.o *.exe )
@@ -162,5 +169,5 @@ save :
 	tar --mode=a-x  --exclude=*.o --exclude=Output --ignore-failed-read -cvf savemin.tar  *.c *.cc *.cxx *.h *.H *.hh Makefile *.txt *.ini *.m S W 
 	gzip -6 savemin.tar 
 	(cd ../../A/aigo12; mdat) 
-# ============================================================================#
-   
+# =============================================================================#
+
